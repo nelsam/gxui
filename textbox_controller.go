@@ -329,13 +329,12 @@ func (t *TextBoxController) indexUp(i, stored int) int {
 func (t *TextBoxController) IndexDown(sel TextSelection) TextSelection {
 	sel.start = t.indexDown(sel.start, sel.storedStart)
 	sel.end = t.indexDown(sel.end, sel.storedEnd)
-	if sel.end == len(t.text)-1 {
+	if sel.end == len(t.text) {
 		return sel.Store()
 	}
 	return sel
 }
 
-// TODO: figure out why pressing down at the end of the file goes back one character
 func (t *TextBoxController) indexDown(i, stored int) int {
 	line := t.LineIndex(i)
 	storedLine := t.LineIndex(stored)
@@ -343,7 +342,7 @@ func (t *TextBoxController) indexDown(i, stored int) int {
 	if line < t.LineCount()-1 {
 		return math.Min(t.LineStart(line+1)+x, t.LineEnd(line+1))
 	}
-	return math.Max(len(t.text)-1, 0)
+	return math.Max(len(t.text), 0)
 }
 
 func (t *TextBoxController) IndexHome(sel TextSelection) TextSelection {
