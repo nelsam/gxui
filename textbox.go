@@ -24,6 +24,7 @@ type TextBox interface {
 	SetMultiline(bool)
 	DesiredWidth() int
 	SetDesiredWidth(desiredWidth int)
+	StartOffset() int
 	TextColor() Color
 	SetTextColor(Color)
 	Select(TextSelectionList)
