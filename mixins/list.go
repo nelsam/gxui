@@ -41,6 +41,7 @@ type List struct {
 	scrollBar                gxui.ScrollBar
 	scrollBarChild           *gxui.Child
 	scrollBarEnabled         bool
+	scrollRound              bool
 	selectedItem             gxui.AdapterItem
 	onSelectionChanged       gxui.Event
 	details                  map[gxui.AdapterItem]itemDetails
@@ -66,6 +67,7 @@ func (l *List) Init(outer ListOuter, theme gxui.Theme) {
 	l.scrollBar = theme.CreateScrollBar()
 	l.scrollBarChild = l.AddChild(l.scrollBar)
 	l.scrollBarEnabled = true
+	l.scrollRound = false
 	l.scrollBar.OnScroll(func(from, to int) { l.SetScrollOffset(from) })
 
 	l.SetOrientation(gxui.Vertical)
@@ -221,6 +223,17 @@ func (l *List) SetScrollBarEnabled(enabled bool) {
 	}
 }
 
+func (l *List) ScrollRound() bool {
+	return l.scrollRound
+}
+
+func (l *List) SetScrollRound(value bool) {
+	if l.scrollRound != value {
+		l.scrollRound = value
+		l.Relayout()
+	}
+}
+
 func (l *List) ScrollOffset() int {
 	return l.scrollOffset
 }
@@ -231,10 +244,16 @@ func (l *List) SetScrollOffset(scrollOffset int) {
 	}
 	s := l.outer.Size().Contract(l.outer.Padding())
 	if l.orientation.Horizontal() {
+		if l.scrollRound && l.itemSize.W != 0 {
+			scrollOffset -= scrollOffset % l.itemSize.W
+		}
 		maxScroll := math.Max(l.itemSize.W*l.itemCount-s.W, 0)
 		scrollOffset = math.Clamp(scrollOffset, 0, maxScroll)
 		l.scrollBar.SetScrollPosition(scrollOffset, scrollOffset+s.W)
 	} else {
+		if l.scrollRound && l.itemSize.H != 0 {
+			scrollOffset -= scrollOffset % l.itemSize.H
+		}
 		maxScroll := math.Max(l.itemSize.H*l.itemCount-s.H, 0)
 		scrollOffset = math.Clamp(scrollOffset, 0, maxScroll)
 		l.scrollBar.SetScrollPosition(scrollOffset, scrollOffset+s.H)
