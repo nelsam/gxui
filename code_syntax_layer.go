@@ -24,12 +24,12 @@ func (l *CodeSyntaxLayer) Clear() {
 }
 
 func (l *CodeSyntaxLayer) UpdateSpans(runeCount int, edits []TextBoxEdit) {
+	if l == nil {
+		continue
+	}
 	min := 0
 	max := runeCount
 	for _, e := range edits {
-		if l == nil {
-			continue
-		}
 		for j, s := range l.spans {
 			at := e.At
 			start, end := s.Range()

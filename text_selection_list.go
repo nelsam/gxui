@@ -44,8 +44,8 @@ func (l TextSelectionList) Cap() int {
 	return cap(l)
 }
 
-func (l *TextSelectionList) SetLen(len int) {
-	*l = (*l)[:len]
+func (l *TextSelectionList) SetLen(length int) {
+	*l = (*l)[:length]
 }
 
 func (l *TextSelectionList) GrowTo(length, capacity int) {
