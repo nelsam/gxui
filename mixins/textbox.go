@@ -54,6 +54,7 @@ type TextBox struct {
 	horizScroll      gxui.ScrollBar
 	horizScrollChild *gxui.Child
 	horizOffset      int
+	horizScrollES    gxui.EventSubscription
 }
 
 func (t *TextBox) lineMouseDown(line TextBoxLine, ev gxui.MouseEvent) {
@@ -96,7 +97,7 @@ func (t *TextBox) Init(outer TextBoxOuter, driver gxui.Driver, theme gxui.Theme,
 	t.horizScroll = theme.CreateScrollBar()
 	t.horizScrollChild = t.AddChild(t.horizScroll)
 	t.horizScroll.SetOrientation(gxui.Horizontal)
-	t.horizScroll.OnScroll(func(from, to int) {
+	t.horizScrollES = t.horizScroll.OnScroll(func(from, to int) {
 		t.SetHorizOffset(from)
 	})
 

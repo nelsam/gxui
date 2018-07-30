@@ -201,6 +201,6 @@ func (t *DefaultTextBoxLine) PositionAt(runeIndex int) math.Point {
 	controller := t.textbox.controller
 
 	x := runeIndex - controller.LineStart(t.lineIndex)
-	line := controller.Line(t.lineIndex)
-	return font.Measure(&gxui.TextBlock{Runes: []rune(line)[:x]}).Point()
+	runes := controller.LineRunes(t.lineIndex)
+	return font.Measure(&gxui.TextBlock{Runes: runes[:x]}).Point()
 }

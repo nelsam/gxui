@@ -46,6 +46,10 @@ func (e *CodeEditor) Init(outer CodeEditorOuter, driver gxui.Driver, theme gxui.
 	e.suggestionList.SetAdapter(e.suggestionAdapter)
 
 	e.TextBox.Init(outer, driver, theme, font)
+	e.TextBox.horizScrollES.Unlisten()
+	e.TextBox.horizScrollES = e.TextBox.horizScroll.OnScroll(func(from, to int) {
+		e.SetHorizOffset(from)
+	})
 	e.controller.OnTextChanged(e.updateSpans)
 
 	e.SetTabSpaces(false)
@@ -247,4 +251,72 @@ func (e *CodeEditor) CreateLine(theme gxui.Theme, index int) (TextBoxLine, gxui.
 	layout.AddChild(line)
 
 	return line, layout
+}
+
+func (e *CodeEditor) SetHorizOffset(offset int) {
+	e.updateHorizScrollLimit()
+	e.updateChildOffsets(e, offset)
+	e.horizScroll.SetScrollPosition(offset, offset+e.Size().W)
+	if e.horizOffset != offset {
+		e.horizOffset = offset
+		e.LayoutChildren()
+	}
+}
+
+func (e *CodeEditor) updateHorizScrollLimit() {
+	maxWidth := e.MaxLineWidth()
+	size := e.Size().Contract(e.outer.Padding())
+	maxScroll := math.Max(maxWidth-size.W, 0)
+	math.Clamp(e.horizOffset, 0, maxScroll)
+	e.horizScroll.SetScrollLimit(maxWidth)
+}
+
+func (e *CodeEditor) MaxLineWidth() int {
+	maxWidth := 0
+	lines := e.Controller().LineCount()
+	for i := 0; i < lines; i++ {
+		line, _ := e.CreateLine(e.theme, i)
+		lineEnd := e.Controller().LineEnd(i)
+		if lineEnd > len(e.Controller().TextRunes()) {
+			continue
+		}
+		lastPos := line.PositionAt(lineEnd)
+		width := e.lineWidthOffset() + lastPos.X
+		if width > maxWidth {
+			maxWidth = width
+		}
+	}
+	return maxWidth
+}
+
+func (e *CodeEditor) SetSize(size math.Size) {
+	e.List.SetSize(size)
+	e.SetHorizOffset(e.horizOffset)
+}
+
+func (e *CodeEditor) SizeChanged() {
+	e.SetHorizOffset(e.horizOffset)
+	e.outer.Relayout()
+}
+
+func (e *CodeEditor) ScrollToRune(i int) {
+	lineIndex := e.controller.LineIndex(i)
+	e.ScrollToLine(lineIndex)
+
+	size := e.Size()
+	lineOffset := e.lineWidthOffset()
+	padding := e.Padding()
+	horizStart := e.horizOffset
+	horizEnd := e.horizOffset + size.W - padding.W() - lineOffset
+	line, _ := e.outer.CreateLine(e.theme, lineIndex)
+	if i < 0 || i > len(e.Controller().TextRunes()) {
+		return
+	}
+	pos := line.PositionAt(i)
+	if horizStart > pos.X {
+		e.SetHorizOffset(pos.X)
+	}
+	if horizEnd < pos.X {
+		e.SetHorizOffset(pos.X - size.W + padding.W() + lineOffset)
+	}
 }
