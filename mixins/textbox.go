@@ -55,6 +55,7 @@ type TextBox struct {
 	horizScrollChild *gxui.Child
 	horizOffset      int
 	horizScrollES    gxui.EventSubscription
+	maxLineWidth     int
 }
 
 func (t *TextBox) lineMouseDown(line TextBoxLine, ev gxui.MouseEvent) {
@@ -101,9 +102,10 @@ func (t *TextBox) Init(outer TextBoxOuter, driver gxui.Driver, theme gxui.Theme,
 		t.SetHorizOffset(from)
 	})
 
-	t.controller.OnTextChanged(func([]gxui.TextBoxEdit) {
+	t.controller.OnTextChanged(func(l []gxui.TextBoxEdit) {
 		t.onRedrawLines.Fire()
 		t.List.DataChanged(false)
+		t.updateMaxLineWidth(l)
 	})
 	t.controller.OnSelectionChanged(func() {
 		t.onRedrawLines.Fire()
@@ -115,8 +117,11 @@ func (t *TextBox) Init(outer TextBoxOuter, driver gxui.Driver, theme gxui.Theme,
 	_ = gxui.TextBox(t)
 }
 
-func (t *TextBox) MaxLineWidth() int {
-	maxWidth := 0
+func (t *TextBox) updateMaxLineWidth([]gxui.TextBoxEdit) {
+	// TODO: only check lines that were edited.  This requires us to remember
+	// which line was the longest so that if the longest line becomes shorter,
+	// we check all of them.
+	t.maxLineWidth = 0
 	lines := t.Controller().LineCount()
 	for i := 0; i < lines; i++ {
 		line, _ := t.CreateLine(t.theme, i)
@@ -126,11 +131,14 @@ func (t *TextBox) MaxLineWidth() int {
 		}
 		lastPos := line.PositionAt(lineEnd)
 		width := t.lineWidthOffset() + lastPos.X
-		if width > maxWidth {
-			maxWidth = width
+		if width > t.maxLineWidth {
+			t.maxLineWidth = width
 		}
 	}
-	return maxWidth
+}
+
+func (t *TextBox) MaxLineWidth() int {
+	return t.maxLineWidth
 }
 
 func (t *TextBox) lineWidthOffset() int {
