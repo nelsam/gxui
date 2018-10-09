@@ -116,7 +116,6 @@ func (t *TextBox) Init(outer TextBoxOuter, driver gxui.Driver, theme gxui.Theme,
 	t.controller.OnTextChanged(func(l []gxui.TextBoxEdit) {
 		t.onRedrawLines.Fire()
 		t.List.DataChanged(false)
-		t.updateMaxLineWidth(l)
 	})
 	t.controller.OnSelectionChanged(func() {
 		t.onRedrawLines.Fire()
@@ -126,26 +125,6 @@ func (t *TextBox) Init(outer TextBoxOuter, driver gxui.Driver, theme gxui.Theme,
 
 	// Interface compliance test
 	_ = gxui.TextBox(t)
-}
-
-func (t *TextBox) updateMaxLineWidth([]gxui.TextBoxEdit) {
-	// TODO: only check lines that were edited.  This requires us to remember
-	// which line was the longest so that if the longest line becomes shorter,
-	// we check all of them.
-	t.maxLineWidth = 0
-	lines := t.Controller().LineCount()
-	for i := 0; i < lines; i++ {
-		line, _ := t.CreateLine(t.theme, i)
-		lineEnd := t.Controller().LineEnd(i)
-		if lineEnd > len(t.Controller().TextRunes()) {
-			continue
-		}
-		lastPos := line.PositionAt(lineEnd)
-		width := t.lineWidthOffset() + lastPos.X
-		if width > t.maxLineWidth {
-			t.maxLineWidth = width
-		}
-	}
 }
 
 func (t *TextBox) MaxLineWidth() int {
@@ -675,6 +654,19 @@ func (t *TextBox) CreateLine(theme gxui.Theme, index int) (line TextBoxLine, con
 	l := &DefaultTextBoxLine{}
 	l.Init(l, theme, t, index)
 	return l, l
+}
+
+func (t *TextBox) Paint(c gxui.Canvas) {
+	t.maxLineWidth = 0
+	t.PaintChildren.Paint(c)
+}
+
+func (t *TextBox) PaintChild(c gxui.Canvas, child *gxui.Child, idx int) {
+	t.PaintChildren.PaintChild(c, child, idx)
+	width := child.Control.Size().W
+	if width > t.maxLineWidth {
+		t.maxLineWidth = width
+	}
 }
 
 // mixins.List overrides
