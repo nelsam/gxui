@@ -81,7 +81,7 @@ func (l *ScrollLayout) LayoutChildren() {
 		l.scrollBarY.Control.(gxui.ScrollBar).SetScrollLimit(cs.H)
 	}
 
-	l.SetScrollOffset(l.scrollOffset)
+	l.theme.Driver().Call(func() { l.SetScrollOffset(l.scrollOffset) })
 }
 
 func (l *ScrollLayout) DesiredSize(min, max math.Size) math.Size {
