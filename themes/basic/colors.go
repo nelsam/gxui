@@ -5,7 +5,7 @@
 package basic
 
 import (
-	"github.com/nelsam/gxui"
+	"git.sr.ht/~nelsam/gxui"
 )
 
 var Blue30 = gxui.Color{R: 0.0, G: 0.0, B: 0.3, A: 1.0}

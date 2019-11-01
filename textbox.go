@@ -5,7 +5,7 @@
 package gxui
 
 import (
-	"github.com/nelsam/gxui/math"
+	"git.sr.ht/~nelsam/gxui/math"
 )
 
 type TextBox interface {

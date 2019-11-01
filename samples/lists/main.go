@@ -7,10 +7,10 @@ package main
 import (
 	"fmt"
 
-	"github.com/nelsam/gxui"
-	"github.com/nelsam/gxui/drivers/gl"
-	"github.com/nelsam/gxui/math"
-	"github.com/nelsam/gxui/samples/flags"
+	"git.sr.ht/~nelsam/gxui"
+	"git.sr.ht/~nelsam/gxui/drivers/gl"
+	"git.sr.ht/~nelsam/gxui/math"
+	"git.sr.ht/~nelsam/gxui/samples/flags"
 )
 
 // Number picker uses the gxui.DefaultAdapter for driving a list

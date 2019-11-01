@@ -5,7 +5,7 @@
 package parts
 
 import (
-	"github.com/nelsam/gxui"
+	"git.sr.ht/~nelsam/gxui"
 )
 
 type ParentableOuter interface{}

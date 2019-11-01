@@ -10,7 +10,7 @@ import (
 	"image/png"
 	"os"
 
-	"github.com/nelsam/gxui/math"
+	"git.sr.ht/~nelsam/gxui/math"
 	fnt "golang.org/x/image/font"
 	"golang.org/x/image/math/fixed"
 )

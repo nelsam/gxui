@@ -13,7 +13,7 @@ import (
 	"unicode"
 	"unsafe"
 
-	"github.com/nelsam/gxui/math"
+	"git.sr.ht/~nelsam/gxui/math"
 )
 
 type TextBoxEdit struct {

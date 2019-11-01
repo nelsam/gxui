@@ -8,7 +8,7 @@ import (
 	"image"
 
 	"github.com/go-gl/glfw/v3.2/glfw"
-	"github.com/nelsam/gxui/math"
+	"git.sr.ht/~nelsam/gxui/math"
 )
 
 type Viewport interface {

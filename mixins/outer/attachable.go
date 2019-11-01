@@ -5,7 +5,7 @@
 package outer
 
 import (
-	"github.com/nelsam/gxui"
+	"git.sr.ht/~nelsam/gxui"
 )
 
 type Attachable interface {

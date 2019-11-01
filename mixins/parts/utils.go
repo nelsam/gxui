@@ -5,7 +5,7 @@
 package parts
 
 import (
-	"github.com/nelsam/gxui/mixins/outer"
+	"git.sr.ht/~nelsam/gxui/mixins/outer"
 )
 
 func callLayoutChildrenIfSupported(i interface{}) {

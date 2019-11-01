@@ -7,10 +7,10 @@ package mixins
 import (
 	"image"
 
-	"github.com/nelsam/gxui"
-	"github.com/nelsam/gxui/math"
-	"github.com/nelsam/gxui/mixins/outer"
-	"github.com/nelsam/gxui/mixins/parts"
+	"git.sr.ht/~nelsam/gxui"
+	"git.sr.ht/~nelsam/gxui/math"
+	"git.sr.ht/~nelsam/gxui/mixins/outer"
+	"git.sr.ht/~nelsam/gxui/mixins/parts"
 )
 
 type WindowOuter interface {

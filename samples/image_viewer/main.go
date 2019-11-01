@@ -13,9 +13,9 @@ import (
 	_ "image/png"
 	"os"
 
-	"github.com/nelsam/gxui"
-	"github.com/nelsam/gxui/drivers/gl"
-	"github.com/nelsam/gxui/samples/flags"
+	"git.sr.ht/~nelsam/gxui"
+	"git.sr.ht/~nelsam/gxui/drivers/gl"
+	"git.sr.ht/~nelsam/gxui/samples/flags"
 )
 
 func appMain(driver gxui.Driver) {

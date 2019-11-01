@@ -13,9 +13,9 @@ import (
 	glfw32 "github.com/go-gl/glfw/v3.2/glfw"
 	"github.com/goxjs/gl"
 	"github.com/goxjs/glfw"
-	"github.com/nelsam/gxui"
-	"github.com/nelsam/gxui/drivers/gl/platform"
-	"github.com/nelsam/gxui/math"
+	"git.sr.ht/~nelsam/gxui"
+	"git.sr.ht/~nelsam/gxui/drivers/gl/platform"
+	"git.sr.ht/~nelsam/gxui/math"
 )
 
 const viewportDebugEnabled = false

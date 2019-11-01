@@ -5,8 +5,8 @@
 package parts
 
 import (
-	"github.com/nelsam/gxui"
-	"github.com/nelsam/gxui/mixins/outer"
+	"git.sr.ht/~nelsam/gxui"
+	"git.sr.ht/~nelsam/gxui/mixins/outer"
 )
 
 type AttachableOuter interface {

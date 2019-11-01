@@ -7,9 +7,9 @@ package dark
 import (
 	"fmt"
 
-	"github.com/nelsam/gxui"
-	"github.com/nelsam/gxui/gxfont"
-	"github.com/nelsam/gxui/themes/basic"
+	"git.sr.ht/~nelsam/gxui"
+	"git.sr.ht/~nelsam/gxui/gxfont"
+	"git.sr.ht/~nelsam/gxui/themes/basic"
 )
 
 func CreateTheme(driver gxui.Driver) gxui.Theme {

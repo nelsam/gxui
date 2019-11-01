@@ -4,7 +4,7 @@
 
 package gxui
 
-import test "github.com/nelsam/gxui/testing"
+import test "git.sr.ht/~nelsam/gxui/testing"
 import (
 	"strings"
 	"testing"

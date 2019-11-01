@@ -7,9 +7,9 @@ package parts
 import (
 	"fmt"
 
-	"github.com/nelsam/gxui"
-	"github.com/nelsam/gxui/math"
-	"github.com/nelsam/gxui/mixins/outer"
+	"git.sr.ht/~nelsam/gxui"
+	"git.sr.ht/~nelsam/gxui/math"
+	"git.sr.ht/~nelsam/gxui/mixins/outer"
 )
 
 type ContainerOuter interface {

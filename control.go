@@ -4,7 +4,7 @@
 
 package gxui
 
-import "github.com/nelsam/gxui/math"
+import "git.sr.ht/~nelsam/gxui/math"
 
 // Control is the interface exposed by all UI control elements.
 type Control interface {
