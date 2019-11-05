@@ -303,7 +303,10 @@ func (e *CodeEditor) MaxLineWidth() int {
 
 func (e *CodeEditor) SetSize(size math.Size) {
 	e.List.SetSize(size)
-	e.SetHorizOffset(e.horizOffset)
+	// Update position of horizontal scrollbar
+	temp := e.horizOffset
+	e.horizOffset = -1
+	e.SetHorizOffset(temp)
 }
 
 func (e *CodeEditor) SizeChanged() {
