@@ -17,8 +17,8 @@ type PanelHolder struct {
 
 func CreatePanelHolder(theme *Theme) gxui.PanelHolder {
 	p := &PanelHolder{}
-	p.PanelHolder.Init(p, theme)
 	p.theme = theme
+	p.PanelHolder.Init(p, theme)
 	p.SetMargin(math.Spacing{L: 0, T: 2, R: 0, B: 0})
 	return p
 }
