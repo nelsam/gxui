@@ -10,7 +10,7 @@ import (
 	"sync/atomic"
 	"unicode"
 
-	glfw32 "github.com/go-gl/glfw/v3.2/glfw"
+	glfw32 "github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/goxjs/gl"
 	"github.com/goxjs/glfw"
 	"github.com/nelsam/gxui"
