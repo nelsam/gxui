@@ -223,9 +223,9 @@ func (d *driver) SetClipboard(str string) {
 func (d *driver) GetClipboard() (str string, err error) {
 	d.syncDriver(func() {
 		c := d.viewports.Front().Value.(*viewport)
-		str, err = c.window.GetClipboardString()
+		str = c.window.GetClipboardString()
 	})
-	return
+	return str, nil
 }
 
 func (d *driver) CreateFont(data []byte, size int) (gxui.Font, error) {

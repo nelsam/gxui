@@ -7,8 +7,8 @@ package gxui
 import (
 	"image"
 
-	"github.com/go-gl/glfw/v3.2/glfw"
 	"git.sr.ht/~nelsam/gxui/math"
+	"github.com/go-gl/glfw/v3.3/glfw"
 )
 
 type Viewport interface {

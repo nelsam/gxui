@@ -266,13 +266,14 @@ func (e *CodeEditor) CreateLine(theme gxui.Theme, index int) (TextBoxLine, gxui.
 }
 
 func (e *CodeEditor) SetHorizOffset(offset int) {
-	if e.horizOffset != offset {
-		e.updateHorizScrollLimit()
-		e.updateChildOffsets(e, offset)
-		e.horizScroll.SetScrollPosition(offset, offset+e.Size().W)
-		e.horizOffset = offset
-		e.LayoutChildren()
+	if e.horizOffset == offset {
+		return
 	}
+	e.updateHorizScrollLimit()
+	e.updateChildOffsets(e, offset)
+	e.horizScroll.SetScrollPosition(offset, offset+e.Size().W)
+	e.horizOffset = offset
+	e.LayoutChildren()
 }
 
 func (e *CodeEditor) updateHorizScrollLimit() {
@@ -303,12 +304,13 @@ func (e *CodeEditor) MaxLineWidth() int {
 
 func (e *CodeEditor) SetSize(size math.Size) {
 	e.List.SetSize(size)
-	e.SetHorizOffset(e.horizOffset)
+	e.SizeChanged()
 }
 
 func (e *CodeEditor) SizeChanged() {
-	e.SetHorizOffset(e.horizOffset)
-	e.outer.Relayout()
+	e.updateHorizScrollLimit()
+	e.horizScroll.SetScrollPosition(e.horizOffset, e.horizOffset+e.Size().W)
+	e.LayoutChildren()
 }
 
 func (e *CodeEditor) ScrollToRune(i int) {
